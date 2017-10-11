@@ -1,0 +1,11 @@
+[ignore]
+.*/node_modules/.*
+.*/.tmp/.*
+
+[include]
+; src/**/*.js
+
+[libs]
+
+[options]
+suppress_comment= \\(.\\|\n\\)*\\flow-disable-next-line

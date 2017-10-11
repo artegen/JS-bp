@@ -1,0 +1,11 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+.DS_Store
+*.log
+node_modules
+dist
+coverage
+.env*.local
+flow-typed
+.tmp
+*.json5
