@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, no-unused-vars, react/react-in-jsx-scope */
+/* eslint-disable no-undef, no-unused-vars */
 
 const range = (start, end) =>
   Array.from({ length: end - start + 1 }, (x, i) => i + start);

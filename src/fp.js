@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, no-unused-vars, react/react-in-jsx-scope */
+/* eslint-disable no-undef, no-unused-vars */
 
 // void, void 0 <=> undefined
 
