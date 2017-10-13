@@ -81,3 +81,15 @@ const isUnknown = value => value == null;
 
 const putInQuotes = (str = 'Items: 3,2') =>
   replace(/\d+/g, num => `"${num}"`, str); // => Items: "3","2"
+
+// 🔸 math
+const signum = n => (n === 0 ? 0 : n > 0 ? 1 : n < 0 ? -1 : NaN);
+
+const min = arr => Math.min(...arr);
+
+const max = arr => Math.max(...arr);
+const max = (a, b) => (a > b ? a : b); // Same as Math.max – but with a stable number of arguments - works: [3, 6, 9].reduce(Math.max);  // => NaN
+
+const sum = arr => arr.reduce((a, b) => a + b);
+
+const product = arr => arr.reduce((a, b) => a * b);
