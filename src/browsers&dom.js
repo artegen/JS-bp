@@ -1,6 +1,7 @@
 /* eslint-disable no-undef, no-unused-vars */
 
 // events
+// ------
 
 // cross-browser-compatible custom event
 export function emit(evtType, evtData, shouldBubble = false) {
@@ -18,6 +19,7 @@ export function emit(evtType, evtData, shouldBubble = false) {
 // this.root_.dispatchEvent(evt);
 
 // DOM
+// ---
 
 const header = story =>
   [].forEach.call(document.querySelectorAll('header a'), a => {
@@ -53,6 +55,54 @@ app.get('/:section/:id(\\d+)', ctx => {
     });
 });
 
+function closest(el, selector) {
+  function getMatchesProperty(HTMLElementPrototype) {
+    return ['webkitMatchesSelector', 'msMatchesSelector', 'matches']
+      .filter(p => p in HTMLElementPrototype)
+      .pop();
+  }
+
+  const matchesSelector = getMatchesProperty(HTMLElement.prototype);
+
+  while (el) {
+    if (matchesSelector.call(el, selector)) {
+      return el;
+    } else {
+      el = el.parentElement;
+    }
+  }
+  return null;
+}
+
+function $$(selector, context) {
+  context = context || document;
+  var elements = context.querySelectorAll(selector);
+  return [].slice.call(elements);
+}
+
+function toggleClassMenu() {
+  var layout = document.querySelector('.layout');
+  if (!layout.classList.contains('app-menu-open')) {
+    layout.classList.add('app-menu-open');
+  } else {
+    layout.classList.remove('app-menu-open');
+  }
+}
+var openMenu = document.querySelector('.menu-icon');
+openMenu.addEventListener('click', toggleClassMenu, false);
+
+let color = ['red', 'blue', 'yellow'][Math.round(Math.random() * 2)];
+
+window.console = {
+  log: noop,
+  error: noop,
+};
+
 // Web APIs
+// --------
 
 const url = 'https://www.google.com/search?q=' + encodeURIComponent(text);
+
+// Chrome dubugging: getEventListeners()
+
+var inIframe = window.top !== window.self;

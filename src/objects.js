@@ -1,5 +1,10 @@
 /* eslint-disable no-undef, no-unused-vars */
 
+const obj = {
+  ...(cond ? { a: 1 } : {}),
+  b: 2,
+};
+
 const omit = (props, obj) =>
   props.reduce(
     (newObj, val) => (({ [val]: dropped, ...rest }) => rest)(newObj),
@@ -25,13 +30,6 @@ function cacheObjToSortedArray(obj) {
 
 const findKey = (fn, obj) => Object.keys(obj).find(k => fn(obj[k]));
 
-const isObject = value => value !== null && typeof value === 'object';
-// Checks if an object inherits directly from null or Object.prototype – like an object literal ({...}) does.
-const isPlainObject = value =>
-  value &&
-  typeof value === 'object' &&
-  (value.__proto__ == null || value.__proto__ === Object.prototype);
-
 const getValAtPath = (path, obj) =>
   path.split('.').reduce((acc, current) => acc && acc[current], obj);
 
@@ -54,27 +52,24 @@ const toMap = (() => {
   return obj => (obj instanceof Map ? obj : convert(obj));
 })();
 
-// Returns the [[Class]] of an object in lowercase (eg. array, date, regexp, string etc)
-function type(obj) {
-  if (obj === null) {
-    return 'null';
+// Checks if an object inherits directly from null or Object.prototype – like an object literal ({...}) does.
+const isPlainObject = value =>
+  value &&
+  typeof value === 'object' &&
+  (value.__proto__ == null || value.__proto__ === Object.prototype);
+// Return the [[Class]] of an object in lowercase (eg. array, date, regexp, string etc)
+// Or give up and use a module, https://github.com/chaijs/type-detect
+function getType(value) {
+  let type = typeof value;
+  //undefined !== 'object'
+  if (type === 'object') {
+    return value
+      ? ({}.toString.call(value).slice(8, -1) || '').toLowerCase()
+      : 'null';
   }
-
-  if (obj === undefined) {
-    return 'undefined';
-  }
-
-  var ret = (Object.prototype.toString
-    .call(obj)
-    .match(/^\[object\s+(.*?)\]$/)[1] || ''
-  ).toLowerCase();
-
-  if (ret == 'number' && isNaN(obj)) {
-    return 'nan';
-  }
-
-  return ret;
+  return type;
 }
+// if (type == 'number' && isNaN(value)) return 'nan';
 
 const source = {
   value: 'value',

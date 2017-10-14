@@ -88,6 +88,24 @@ const castArray = value => (Array.isArray(value) ? value.slice(0) : [value]);
 const union = (...arrays) => [...Set([].concat(...arrays))];
 
 const unique = arr => [...Set(arr)];
+const uniq = array =>
+  array.filter(
+    (value, index, self) => index === self.findIndex(other => other === value)
+  );
+
+const uniqBy = (array, iteratee = o => o.id) =>
+  array.filter(
+    (value, index, self) =>
+      index === self.findIndex(other => iteratee(other) === iteratee(value))
+  );
 
 const without = (arr, ...values) =>
   arr.filter(el => !values.some(exclude => el === exclude));
+
+const takeUntil = (pred, arr) =>
+  arr.reduce((newArr, i) => {
+    //takeWhile -> !pred(i)
+    if (pred(i)) arr.length = 0;
+    else newArr.push(i);
+    return newArr;
+  }, []);
