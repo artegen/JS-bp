@@ -52,12 +52,12 @@ const toMap = (() => {
   return obj => (obj instanceof Map ? obj : convert(obj));
 })();
 
-// Checks if an object inherits directly from null or Object.prototype – like an object literal ({...}) does.
+// Checks if an object inherits directly from null (Object.create(null);) or Object.prototype (object literal, {};).
 const isPlainObject = value =>
   value &&
   typeof value === 'object' &&
   (value.__proto__ == null || value.__proto__ === Object.prototype);
-// Return the [[Class]] of an object in lowercase (eg. array, date, regexp, string etc)
+// Return the [[Class]] of an object in lowercase (eg. array, date, regexp, string etc).
 // Or give up and use a module, https://github.com/chaijs/type-detect
 function getType(value) {
   let type = typeof value;
@@ -70,6 +70,25 @@ function getType(value) {
   return type;
 }
 // if (type == 'number' && isNaN(value)) return 'nan';
+// Usually you shouldn't need all the checks.
+// val && typeof val === 'object' && !Array.isArray(val)
+
+Object.getOwnPropertyNames(Number.prototype);
+// [ 'toExponential',
+//   'toString',
+//   'toLocaleString',
+//   'toPrecision',
+//   'valueOf',
+//   'toJSON',
+//   'constructor',
+//   'toFixed'];
+Object.keys(Number.prototype);
+// []
+// for-in will follow the inheritance chain, but not built-in Object.prototype
+
+var copy = Object.assign({ __proto__: obj.__proto__ }, obj);
+// If you are only interested in an object’s own properties, things become simpler:
+var copy2 = Object.assign({}, obj);
 
 const source = {
   value: 'value',

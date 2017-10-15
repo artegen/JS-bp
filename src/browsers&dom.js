@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, no-unused-vars */
+/* eslint-disable no-undef, no-unused-vars, react/react-in-jsx-scope, no-unused-expressions */
 
 // events
 // ------
@@ -98,6 +98,9 @@ window.console = {
   error: noop,
 };
 
+let names1 = Array.prototype.map.call(spans, s => s.textContent);
+let names2 = Array.from(spans, s => s.textContent);
+
 // Web APIs
 // --------
 
@@ -106,3 +109,8 @@ const url = 'https://www.google.com/search?q=' + encodeURIComponent(text);
 // Chrome dubugging: getEventListeners()
 
 var inIframe = window.top !== window.self;
+
+// not render-blocking
+<script type="application/json" id="id">
+  {json}
+</script>;

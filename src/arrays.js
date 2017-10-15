@@ -1,14 +1,5 @@
 /* eslint-disable no-undef, no-unused-vars */
 
-const range = (start, end) =>
-  Array.from({ length: end - start + 1 }, (x, i) => i + start);
-
-for (const [index, elem] of arr.entries()) {
-  console.log(index + '. ' + elem);
-}
-
-const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
-
 const flattenedArray = [].concat(...twoDimensionalArray);
 
 function findDuplicates(arr) {
@@ -20,17 +11,8 @@ function findDuplicates(arr) {
   }, []);
 }
 
-const config = (() => {
-  const args = process.argv.slice(2);
-  return args.reduce((result, arg) => {
-    const [key, value] = arg.split('=');
-    result[key] = value;
-    return result;
-  }, {});
-})();
-
 const compact = arr => arr.filter(identity);
-const compact = arr => arr.filter(Boolean);
+const compact2 = arr => arr.filter(Boolean);
 
 const contains = (() =>
   Array.prototype.includes
@@ -61,7 +43,7 @@ const map = (fn, arr) =>
   arr.reduce((acc, item, index, arr) => {
     return acc.concat(fn(item, index, arr));
   }, []);
-const map = (fn, array) => [].concat.apply([], array.map(fn));
+const map2 = (fn, array) => [].concat.apply([], array.map(fn));
 
 const sortedIndex = (arr, value) =>
   [value]
@@ -109,3 +91,74 @@ const takeUntil = (pred, arr) =>
     else newArr.push(i);
     return newArr;
   }, []);
+
+function breakAtEmptyString(arr) {
+  arr.some(function(elem) {
+    if (elem.length === 0) {
+      return true; // break
+    }
+    console.log(elem);
+    // implicit: return undefined (interpreted as false)
+  });
+}
+
+const range = (start, end) =>
+  Array.from({ length: end - start + 1 }, (x, i) => i + start);
+
+for (const [index, elem] of arr.entries()) {
+  console.log(index + '. ' + elem);
+}
+
+const config = (() => {
+  const args = process.argv.slice(2);
+  return args.reduce((result, arg) => {
+    const [key, value] = arg.split('=');
+    result[key] = value;
+    return result;
+  }, {});
+})();
+
+const [, year, month, day] = /^(\d\d\d\d)-(\d\d)-(\d\d)$/.exec('2999-12-31');
+
+/* eslint-disable */
+Array.from([0,,2])
+// [ 0, undefined, 2 ]
+// That means that you can use Array.from() to create and fill an array:
+Array.from(new Array(5), () => 'a')
+// [ 'a', 'a', 'a', 'a', 'a' ]
+Array.from(new Array(5), (x,i) => i)
+// [ 0, 1, 2, 3, 4 ]
+
+[6, -5, 8].find(x => x < 0)
+// -5
+[6, 5, 8].find(x => x < 0)
+// undefined
+
+[6, -5, 8].findIndex(x => x < 0)
+// 1
+[6, 5, 8].findIndex(x => x < 0)
+// -1
+// Both find* methods ignore holes
+
+[NaN].indexOf(NaN)
+// -1
+[NaN].findIndex(y => Object.is(NaN, y))
+// 0
+
+Array.from([ 'a', 'b' ].keys())
+// [ 0, 1 ]
+Array.from([ 'a', 'b' ].values())
+// [ 'a', 'b' ]
+Array.from([ 'a', 'b' ].entries())
+// [ [ 0, 'a' ],
+// [ 1, 'b' ] ]
+
+new Array(3, 11, 8)
+// [ 3, 11, 8 ]
+new Array(3)
+// [ , , ]
+new Array(3.1)
+// RangeError: Invalid array length
+
+['a', 'b', 'c'].fill(7, 1, 2)
+// [ 'a', 7, 'c' ]
