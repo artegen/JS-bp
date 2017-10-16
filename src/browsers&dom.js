@@ -114,3 +114,8 @@ var inIframe = window.top !== window.self;
 <script type="application/json" id="id">
   {json}
 </script>;
+
+;(function loop() {
+  counter.value ++
+  requestAnimationFrame(loop)
+}())
