@@ -162,3 +162,21 @@ new Array(3.1)
 
 ['a', 'b', 'c'].fill(7, 1, 2)
 // [ 'a', 7, 'c' ]
+
+// deferred execution, try w/o lodash
+var assets = [];
+var wallet = _(assets)
+  .filter(ownedBy('me'))
+  .pluck('value')
+  .reduce(sum);
+fetch('/new/assets').then(function(data) {
+  data = data.json();
+  assets.push.apply(assets, data); // update assets
+  wallet.value(); // returns most up-to-date value
+});
+
+// with the lazy evaluation
+var result = [];
+for (var i = 0; i < source.length; i++) {
+  result[i] = func3(func2(func1(source[i])));
+}

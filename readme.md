@@ -12,4 +12,4 @@ Huge appreciation for the examples and immensely helpful posts 👏 👍 🥇 to
 * Axel Rauschmayer
 * Andrea Giammarchi
 
-You can follow them using [this Twitter list](https://twitter.com/sergbuzko/lists/js-know-the-parts)
+You can follow them [by this Twitter list](https://twitter.com/sergbuzko/lists/js-know-the-parts)

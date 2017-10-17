@@ -1,5 +1,22 @@
 /* eslint-disable no-undef, no-unused-vars */
 
+// unlike Promise.all here we collect all the responses in the nested array, and then flatten it, which filters out failures
+async function downloadFiles(urls) {
+  const downloadAttempts = await Promises.all(
+    urls.map(url => downloadFile(url))
+  );
+  return flatten(downloadAttempts);
+}
+async function downloadFile(url) {
+  try {
+    const response = await fetch(url);
+    const text = await response.text();
+    return [text];
+  } catch (err) {
+    return [];
+  }
+}
+
 function logInOrder(urls) {
   // fetch all the URLs in parallel
   const textPromises = urls.map(url => {

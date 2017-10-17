@@ -1,7 +1,6 @@
 /* eslint-disable no-undef, no-unused-vars, react/react-in-jsx-scope, no-unused-expressions */
 
-// events
-// ------
+// events  -----------------------------------------------------------------------------------------
 
 // cross-browser-compatible custom event
 export function emit(evtType, evtData, shouldBubble = false) {
@@ -18,8 +17,7 @@ export function emit(evtType, evtData, shouldBubble = false) {
 }
 // this.root_.dispatchEvent(evt);
 
-// DOM
-// ---
+// DOM  --------------------------------------------------------------------------------------------
 
 const header = story =>
   [].forEach.call(document.querySelectorAll('header a'), a => {
@@ -101,8 +99,7 @@ window.console = {
 let names1 = Array.prototype.map.call(spans, s => s.textContent);
 let names2 = Array.from(spans, s => s.textContent);
 
-// Web APIs
-// --------
+// Web APIs  ---------------------------------------------------------------------------------------
 
 const url = 'https://www.google.com/search?q=' + encodeURIComponent(text);
 
