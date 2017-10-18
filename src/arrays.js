@@ -1,6 +1,15 @@
 /* eslint-disable no-undef, no-unused-vars */
 
-const flattenedArray = [].concat(...twoDimensionalArray);
+// Avoid holes (holey forever), reading beyond the length, elements kind transitions, operate on a single elements kind. https://v8project.blogspot.ru/2017/09/elements-kinds-in-v8.html
+
+
+function flatMap(arr, mapFunc) {
+  return flatten(arr.map(mapFunc)); //can return array of values
+}
+// 🃏 it's map-reduce :)
+arr.map().reduce((prev, x) => prev.concat(x), []);
+
+const flatten = [].concat(...twoDimensionalArray);
 
 function findDuplicates(arr) {
   return arr.reduce((acc, x1, idx1) => {

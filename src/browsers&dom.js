@@ -99,6 +99,10 @@ window.console = {
 let names1 = Array.prototype.map.call(spans, s => s.textContent);
 let names2 = Array.from(spans, s => s.textContent);
 
+for (const item of NodeList) {
+  doSomething(item);
+}
+
 // Web APIs  ---------------------------------------------------------------------------------------
 
 const url = 'https://www.google.com/search?q=' + encodeURIComponent(text);

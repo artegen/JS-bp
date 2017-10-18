@@ -1,5 +1,18 @@
 /* eslint-disable no-undef, no-unused-vars */
 
+// faster object iteration
+for (const [key, value] of Object.entries(obj)) {
+  // do
+}
+// with Babel transformed to
+for (const key in obj) {
+  if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    const value = obj[key];
+    // do
+  }
+}
+// Only as long as there are no getters or proxies involved, and you don't care about mutation during iteration. http://benediktmeurer.de/2017/09/07/restoring-for-in-peak-performance/
+
 const obj = {
   ...(cond ? { a: 1 } : {}),
   b: 2,
@@ -15,7 +28,7 @@ const pick = (properties, object) =>
   Object.assign({}, ...properties.map(key => ({ [key]: object[key] })));
 
 const entries = obj => Object.keys(obj).map(key => [key, obj[key]]);
-entries(['foo', 'bar', 'baz']); // => [ [0, 'foo'], [1, 'bar'], [2, 'baz'] ]
+// entries(['foo', 'bar', 'baz']); => [ [0, 'foo'], [1, 'bar'], [2, 'baz'] ]
 
 function sortByTimeDesc(a, b) {
   return b.time - a.time;
@@ -52,7 +65,7 @@ const toMap = (() => {
   return obj => (obj instanceof Map ? obj : convert(obj));
 })();
 
-// Checks if an object inherits directly from null (Object.create(null);) or Object.prototype (object literal, {};).
+// Checks if an object inherits directly from null (Object.create(null);) or Object.prototype (object literal, {}).
 const isPlainObject = value =>
   value &&
   typeof value === 'object' &&
@@ -70,7 +83,7 @@ function getType(value) {
   return type;
 }
 // if (type == 'number' && isNaN(value)) return 'nan';
-// Usually you shouldn't need all the checks.
+// Usually you shouldn't need all this trickery. Ex.:
 // val && typeof val === 'object' && !Array.isArray(val)
 
 Object.getOwnPropertyNames(Number.prototype);
@@ -85,6 +98,7 @@ Object.getOwnPropertyNames(Number.prototype);
 Object.keys(Number.prototype);
 // []
 // for-in will follow the inheritance chain, but not built-in Object.prototype
+// check for property: ('prop' in obj.nested). obj.nested.prop - always truthy
 
 var copy = Object.assign({ __proto__: obj.__proto__ }, obj);
 // If you are only interested in an object’s own properties, things become simpler:
