@@ -1,6 +1,8 @@
 /* eslint-disable no-undef, no-unused-vars, react/react-in-jsx-scope, no-unused-expressions */
 
 // events  -----------------------------------------------------------------------------------------
+// as soon as possible (deferred behavior)
+document.addEventListener('DOMContentLoaded', function() {}, { once: true });
 
 // cross-browser-compatible custom event
 export function emit(evtType, evtData, shouldBubble = false) {
@@ -15,9 +17,12 @@ export function emit(evtType, evtData, shouldBubble = false) {
     evt.initCustomEvent(evtType, shouldBubble, false, evtData);
   }
 }
-// this.root_.dispatchEvent(evt);
+//fire it: elm.dispatchEvent(evtType);
+// A few more details to keep track for events, refer to module - https://github.com/dgraham/delegated-events
 
 // DOM  --------------------------------------------------------------------------------------------
+// You didn't need jQuery for quite some time, http://blissfuljs.com/, http://youmightnotneedjquery.com/, etc.
+// Browser quirks are not the huge problem any more, yet a framework can still simplify dom manipulations, batch reads/writes and protect from mistakes of forcing rerendering all nodes.
 
 const header = story =>
   [].forEach.call(document.querySelectorAll('header a'), a => {
@@ -32,26 +37,17 @@ const fadeIn = value => {
   main().classList.remove('opaque');
   return value;
 };
-app.get('/:section/:id(\\d+)', ctx => {
-  const pathname = (lastClick = document.location.pathname);
-  main().classList.add('opaque');
-  render.header(ctx.params.section);
-  fetch(lastClick + '.json')
-    .then(body => body.json())
-    .then(data => {
-      // avoid races with latest clicked section
-      if (lastClick === pathname) {
-        document.title = title;
-        render.main(
-          Promise.all(
-            data.items
-              .map(render.summary)
-              .concat(data.next ? render.next(data) : [])
-          ).then(fadeIn)
-        );
-      }
-    });
-});
+const pathname = (lastClick = document.location.pathname);
+main().classList.add('opaque');
+fetch(lastClick + '.json')
+  .then(body => body.json())
+  .then(data => {
+    // avoid races with latest clicked section
+    if (lastClick === pathname) {
+      document.title = title;
+      render(data).then(fadeIn);
+    }
+  });
 
 function closest(el, selector) {
   function getMatchesProperty(HTMLElementPrototype) {

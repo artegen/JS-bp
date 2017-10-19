@@ -6,7 +6,7 @@ for (const [key, value] of Object.entries(obj)) {
 }
 // with Babel transformed to
 for (const key in obj) {
-  if (Object.prototype.hasOwnProperty.call(obj, key)) {
+  if (Object.prototype.hasOwnProperty.call(obj, key)) { //safety
     const value = obj[key];
     // do
   }
@@ -27,6 +27,7 @@ const omit = (props, obj) =>
 const pick = (properties, object) =>
   Object.assign({}, ...properties.map(key => ({ [key]: object[key] })));
 
+// notice, Object.keys() is not fastest, see for..in
 const entries = obj => Object.keys(obj).map(key => [key, obj[key]]);
 // entries(['foo', 'bar', 'baz']); => [ [0, 'foo'], [1, 'bar'], [2, 'baz'] ]
 
@@ -47,18 +48,6 @@ const getValAtPath = (path, obj) =>
   path.split('.').reduce((acc, current) => acc && acc[current], obj);
 
 const getValues = obj => Object.keys(obj).map(key => obj[key]);
-
-const merge = (() => {
-  const extend = Object.assign
-    ? Object.assign
-    : (target, ...sources) => {
-        sources.forEach(source =>
-          Object.keys(source).forEach(prop => (target[prop] = source[prop]))
-        );
-        return target;
-      };
-  return (...objects) => extend(...objects);
-})();
 
 const toMap = (() => {
   const convert = obj => new Map(Object.keys(obj).map(key => [key, obj[key]]));
@@ -84,7 +73,7 @@ function getType(value) {
 }
 // if (type == 'number' && isNaN(value)) return 'nan';
 // Usually you shouldn't need all this trickery. Ex.:
-// val && typeof val === 'object' && !Array.isArray(val)
+// val && typeof val === 'object' && !Array.isArray(val) - the input val can be object or array (we need {}'s, not []'s)
 
 Object.getOwnPropertyNames(Number.prototype);
 // [ 'toExponential',
@@ -98,7 +87,7 @@ Object.getOwnPropertyNames(Number.prototype);
 Object.keys(Number.prototype);
 // []
 // for-in will follow the inheritance chain, but not built-in Object.prototype
-// check for property: ('prop' in obj.nested). obj.nested.prop - always truthy
+// check for property: ('prop' in obj.nested). obj.nested.prop - checks truthiness (of value)
 
 var copy = Object.assign({ __proto__: obj.__proto__ }, obj);
 // If you are only interested in an object’s own properties, things become simpler:
@@ -112,3 +101,16 @@ const target = Object.assign({}, source); // it's shallow clone of 1 level
 // target === source; // => false
 // target.value === source.value; // => true
 // target.reference === source.reference; // => true
+
+// Object.assign or ...
+const merge = (() => {
+  const extend = Object.assign
+    ? Object.assign
+    : (target, ...sources) => {
+        sources.forEach(source =>
+          Object.keys(source).forEach(prop => (target[prop] = source[prop]))
+        );
+        return target;
+      };
+  return (...objects) => extend(...objects);
+})();
