@@ -21,8 +21,12 @@ export function emit(evtType, evtData, shouldBubble = false) {
 // A few more details to keep track for events, refer to module - https://github.com/dgraham/delegated-events
 
 // DOM  --------------------------------------------------------------------------------------------
+
 // You didn't need jQuery for quite some time, http://blissfuljs.com/, http://youmightnotneedjquery.com/, etc.
-// Browser quirks are not the huge problem any more, yet a framework can still simplify dom manipulations, batch reads/writes and protect from mistakes of forcing rerendering all nodes.
+// Browsers quirks are not the huge problem any more, yet a framework can simplify dom manipulations, batch reads/writes and protect from mistakes of forcing rerendering all nodes.
+
+// During the tokenization phase the browser's preloader will initiate JS download, so the "script fetch" phase, during DOM building, may fall to 0 length.
+// Deffered scripts will always execute in the source order, no matter which downloads first. Async will execute immediately after its download.
 
 const header = story =>
   [].forEach.call(document.querySelectorAll('header a'), a => {
@@ -112,7 +116,7 @@ var inIframe = window.top !== window.self;
   {json}
 </script>;
 
-;(function loop() {
+(function loop() {
   counter.value ++
   requestAnimationFrame(loop)
 }())

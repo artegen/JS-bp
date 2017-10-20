@@ -102,6 +102,18 @@ const target = Object.assign({}, source); // it's shallow clone of 1 level
 // target.value === source.value; // => true
 // target.reference === source.reference; // => true
 
+function findCommonDeps(depTrees) {
+  const depSet = new Set();
+  // Flatten
+  depTrees.forEach(depTree => {
+    depTree.forEach(dep => depSet.add(dep));
+  });
+  // Filter
+  return Array.from(depSet).filter(dep =>
+    depTrees.every(depTree => depTree.includes(dep))
+  );
+}
+
 // Object.assign or ...
 const merge = (() => {
   const extend = Object.assign
