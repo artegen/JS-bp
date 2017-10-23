@@ -18,6 +18,13 @@ const obj = {
   b: 2,
 };
 
+// https://github.com/developit/dlv
+function safePropLookUp(obj, path, defaultVal, p = 0) {
+  const keys = path.split ? path.split('.') : path; //string or array
+  while (obj && p < keys.length) obj = obj[keys[p++]]; //reduce
+  return obj === undefined ? defaultVal : obj;
+}
+
 const omit = (props, obj) =>
   props.reduce(
     (newObj, val) => (({ [val]: dropped, ...rest }) => rest)(newObj),

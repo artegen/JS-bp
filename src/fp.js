@@ -13,7 +13,7 @@ const compose = (...fns) => start =>
 const pipe = (f, g) => (...args) => g(f(...args));
 
 const pipeline = (...funcs) => value => funcs.reduce((a, b) => b(a), value);
-const pipeline = fns => fns.reduceRight((f, g) => (...args) => f(g(...args)));
+const pipeline2 = fns => fns.reduceRight((f, g) => (...args) => f(g(...args)));
 
 const composeAll = fns => fns.reduce((f, g) => (...args) => f(g(...args)));
 
@@ -88,7 +88,7 @@ const signum = n => (n === 0 ? 0 : n > 0 ? 1 : n < 0 ? -1 : NaN);
 const min = arr => Math.min(...arr);
 
 const max = arr => Math.max(...arr);
-const max = (a, b) => (a > b ? a : b); // Same as Math.max – but with a stable number of arguments - works: [3, 6, 9].reduce(Math.max);  // => NaN
+const max2 = (a, b) => (a > b ? a : b); // Same as Math.max – but with a stable number of arguments - works: [3, 6, 9].reduce(Math.max);  // => NaN
 
 const sum = arr => arr.reduce((a, b) => a + b);
 

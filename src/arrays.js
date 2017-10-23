@@ -2,6 +2,12 @@
 
 // Avoid holes (holey forever), reading beyond the length, elements kind transitions, operate on a single elements kind. https://v8project.blogspot.ru/2017/09/elements-kinds-in-v8.html
 
+// Add | Remove | Replace | Transform
+// mutates: push, unshift | pop, shift, splice | splice | forEach
+// doesn't: concat, ...spread | filter, slice | map | map
+[...dontMutate].push() //or
+dontMutate.slice(0).push()
+
 
 function flatMap(arr, mapFunc) {
   return flatten(arr.map(mapFunc)); //can return array of values
