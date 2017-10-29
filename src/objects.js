@@ -29,7 +29,7 @@ const omit = (props, obj) =>
   props.reduce(
     (newObj, val) => (({ [val]: dropped, ...rest }) => rest)(newObj),
     obj
-  );
+  ); //uses destructuring to iterate, performance?
 
 const pick = (properties, object) =>
   Object.assign({}, ...properties.map(key => ({ [key]: object[key] })));

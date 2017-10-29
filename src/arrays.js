@@ -1,6 +1,8 @@
 /* eslint-disable no-undef, no-unused-vars */
 
-// Avoid holes (holey forever), reading beyond the length, elements kind transitions, operate on a single elements kind. https://v8project.blogspot.ru/2017/09/elements-kinds-in-v8.html
+// Avoid holes (holey forever), reading beyond the length,
+// elements kind transitions, operate on a single elements kind.
+//  https://v8project.blogspot.ru/2017/09/elements-kinds-in-v8.html
 
 // Add | Remove | Replace | Transform
 // mutates: push, unshift | pop, shift, splice | splice | forEach
@@ -38,6 +40,13 @@ const difference = (arr, ...others) => {
   var combined = [].concat(...others);
   return arr.filter(el => !combined.some(exclude => el === exclude));
 };
+
+const without = (prevList, nextList) => {
+  return nextList.filter(el => !prevList.some(exclude => el === exclude));
+};
+
+const without2 = (arr, ...values) =>
+arr.filter(el => !values.some(exclude => el === exclude));
 
 const intersection = (...arrays) =>
   [...Set([].concat(...arrays))].filter(toFind =>
@@ -96,8 +105,12 @@ const uniqBy = (array, iteratee = o => o.id) =>
       index === self.findIndex(other => iteratee(other) === iteratee(value))
   );
 
-const without = (arr, ...values) =>
-  arr.filter(el => !values.some(exclude => el === exclude));
+const indexBy = (
+  prop: string,
+  list: Array<Object>
+): { [key: string]: Object } => {
+  list.reduce((indexed, obj) => (indexed[obj[prop]] = obj), {});
+};
 
 const takeUntil = (pred, arr) =>
   arr.reduce((newArr, i) => {
