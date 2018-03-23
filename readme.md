@@ -1,10 +1,11 @@
 # JS boilerplate, concise reference, utilities, best practices
 
-Sourced from around the <s>*world*</s>web and organized for everyday use.
+Sourced from around the <s>_world_</s>web and organized for everyday use.
 
 ## Acknowledgement
 
 Huge appreciation for the examples and immensely helpful posts 👏 👍 🥇 to:
+
 * Andrea Giammarchi
 * Axel Rauschmayer
 * Benjamin De Cock
@@ -13,4 +14,4 @@ Huge appreciation for the examples and immensely helpful posts 👏 👍 🥇 to
 * Jake Archibald
 * Nicolás Bevacqua
 
-You can follow them [by this Twitter list](https://twitter.com/sergbuzko/lists/js-know-the-parts)
+You can follow them [by this Twitter list](https://twitter.com/artegenus/lists/js-know-the-parts)
