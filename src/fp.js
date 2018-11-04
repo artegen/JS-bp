@@ -34,7 +34,7 @@ const prop = curry((key, obj) => obj[key]);
 const upperCase = curry(str => str.toUpperCase()); // no need for curry
 const formatName = compose(upperCase, prop('name'));
 const person = {
-  name: 'Tim',
+  name: 'Tim'
 };
 console.log(formatName(person));
 

@@ -11,7 +11,7 @@ for (const key in obj) {
     // do
   }
 }
-// Only as long as there are no getters or proxies involved, and you don't care about mutation during iteration. http://benediktmeurer.de/2017/09/07/restoring-for-in-peak-performance/
+// Only as long as there are no getters or proxies involved, and you don't care about mutation during iteration. Also, if the prototype chain contains enumerable properties then Object.keys will be faster in most cases. http://benediktmeurer.de/2017/09/07/restoring-for-in-peak-performance/
 
 const obj = {
   ...(cond ? { a: 1 } : {}),
